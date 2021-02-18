@@ -92,6 +92,7 @@ Output:
 <img width="60%" src="https://github.com/onlyphantom/elangdev/raw/master/assets/tsne.png">
 
 ### Building a Word2Vec model from Wikipedia
+Install the `requests` package (`pip install requests`) to use the builder functions below:
 
 ```py
 from elang.word2vec.builder import build_from_wikipedia
@@ -105,6 +106,20 @@ print(model1)
 The code above constructs two Word2Vec models, `model1` and `model2`. The function that constructs these models does so by building a corpus from 3 (`n`) random articles on id.wikipedia.org (`id`). The corpus can optionally be saved by passing the `save=True` argument to the function call. 
 
 In `model2`, the function starts off by looking at the article: `https://id.wikipedia.org/wiki/Koronavirus` (determined by `id` and `slug`), and then find all related articles (level 1), and subsequently all related articles to those related articles (level 2). A corpus is built using all articles it find along this search branch (`levels`).
+
+You can now use the other utilities function with `model1` that you created above:
+
+```python
+from elang.plot.utils import plot2d
+plot2d(model)
+```
+
+Or find the most similar words to any word in your Word2Vec model:
+```python
+model1.wv.most_similar("koronavirus")
+# return:
+[('subtipe', 0.9947343468666077), ('mers', 0.9941919445991516), ('influenza', 0.9937061667442322), ('flu', 0.993574857711792), ('galur', 0.9933352470397949), ('hanta', 0.9925214052200317), ('sindrom', 0.992496907711029), ('hku', 0.9921219944953918), ('herpes', 0.9921203851699829), ('adenovirus', 0.9920581579208374)]
+```
 
 #### Building a Corpus from Wikipedia (without Word2Vec model)
 
